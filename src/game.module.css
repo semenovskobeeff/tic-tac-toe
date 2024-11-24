@@ -1,0 +1,15 @@
+.app {
+	text-align: center;
+	font-family: "Courier New", Courier, monospace;
+}
+
+.app__start-over {
+	font-size: 20px;
+	background-color: rgb(103, 103, 226);
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-top: 20px;
+}

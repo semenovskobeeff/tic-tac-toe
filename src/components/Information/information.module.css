@@ -1,0 +1,16 @@
+.information {
+	display: block;
+	font-size: 35px;
+	line-height: 1.2;
+	margin-bottom: 30px;
+	text-align: center;
+	padding-top: 20px;
+}
+
+.win {
+	color: green;
+}
+
+.draw {
+	color: blue;
+}
