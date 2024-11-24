@@ -46,8 +46,13 @@ export const Game = () => {
 	const [isGameEnded, setIsGameEnded] = useState(false); // была ли игра окончена
 	const [isDraw, setIsDraw] = useState(false); // была ли ничья
 	const [field, setField] = useState(["", "", "", "", "", "", "", "", ""]);
+	const [startingNewGame, setStartingNewGame] = useState(false);
 
 	useEffect(() => {
+		if (startingNewGame) {
+			return;
+		}
+
 		const winner = checkWinner(field);
 		const count = countEmptyCells(field);
 
@@ -60,13 +65,22 @@ export const Game = () => {
 				setCurrentPlayer((prev) => (prev === "X" ? "O" : "X"));
 			}
 		}
-	}, [field, isGameEnded]);
+	}, [field, isGameEnded, startingNewGame]);
+
+	// Устанавливаем currentPlayer на "X" после сброса
+	useEffect(() => {
+		if (startingNewGame) {
+			setCurrentPlayer("X");
+			setStartingNewGame(false); // После установки на "X" сбрасываем флаг
+		}
+	}, [startingNewGame]);
 
 	const startOver = useCallback(() => {
 		setField(["", "", "", "", "", "", "", "", ""]);
 		setIsDraw(false);
 		setIsGameEnded(false);
 		setCurrentPlayer("X");
+		setStartingNewGame(true);
 	}, []);
 
 	return (
