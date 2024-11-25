@@ -3,12 +3,17 @@ import { Field, Information } from "./components";
 import styles from "./game.module.css";
 import { useCallback, useState, useEffect } from "react";
 
-const GameLayout = ({ isGameEnded, onStartOver, isDraw }) =>
-	isGameEnded || isDraw ? (
-		<button className={styles["app__start-over"]} onClick={onStartOver}>
-			Начать заново
-		</button>
-	) : null;
+const GameLayout = ({ isGameEnded, onStartOver, isDraw, field, setField, currentPlayer }) => (
+	<div className={styles.app}>
+		<Information isDraw={isDraw} isGameEnded={isGameEnded} currentPlayer={currentPlayer} />
+		<Field field={field} setField={setField} currentPlayer={currentPlayer} isGameEnded={isGameEnded} />
+		{isGameEnded || isDraw ? (
+			<button className={styles["app__start-over"]} onClick={onStartOver}>
+				Начать заново
+			</button>
+		) : null}
+	</div>
+);
 
 GameLayout.propTypes = {
 	isGameEnded: PropTypes.bool.isRequired,
@@ -71,7 +76,7 @@ export const Game = () => {
 	useEffect(() => {
 		if (startingNewGame) {
 			setCurrentPlayer("X");
-			setStartingNewGame(false); // После установки на "X" сбрасываем флаг
+			setStartingNewGame(false);
 		}
 	}, [startingNewGame]);
 
@@ -84,10 +89,13 @@ export const Game = () => {
 	}, []);
 
 	return (
-		<div className={styles.app}>
-			<Information isDraw={isDraw} isGameEnded={isGameEnded} currentPlayer={currentPlayer} />
-			<Field field={field} setField={setField} currentPlayer={currentPlayer} isGameEnded={isGameEnded} />
-			<GameLayout isGameEnded={isGameEnded} onStartOver={startOver} isDraw={isDraw} />
-		</div>
+		<GameLayout
+			isGameEnded={isGameEnded}
+			onStartOver={startOver}
+			isDraw={isDraw}
+			currentPlayer={currentPlayer}
+			field={field}
+			setField={setField}
+		/>
 	);
 };
